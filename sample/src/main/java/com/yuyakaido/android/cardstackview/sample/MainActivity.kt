@@ -104,17 +104,17 @@ class MainActivity : AppCompatActivity(), CardStackListener {
     private fun setupButton() {
         val skip = findViewById<View>(R.id.skip_button)
         skip.setOnClickListener {
-            val setting = SwipeAnimationSetting.Builder()
-                    .setDirection(Direction.Left)
+            val setting = RewindAnimationSetting.Builder()
+                    .setDirection(Direction.Right)
                     .setDuration(Duration.Normal.duration)
-                    .setInterpolator(AccelerateInterpolator())
+                    .setInterpolator(DecelerateInterpolator())
                     .build()
-            manager.setSwipeAnimationSetting(setting)
-            cardStackView.swipe()
+            manager.setRewindAnimationSetting(setting)
+            cardStackView.rewind()
         }
 
-        val rewind = findViewById<View>(R.id.rewind_button)
-        rewind.setOnClickListener {
+        val rev_rewind = findViewById<View>(R.id.rev_rewind_button)
+        rev_rewind.setOnClickListener {
             val setting = RewindAnimationSetting.Builder()
                     .setDirection(Direction.Bottom)
                     .setDuration(Duration.Normal.duration)
@@ -122,6 +122,17 @@ class MainActivity : AppCompatActivity(), CardStackListener {
                     .build()
             manager.setRewindAnimationSetting(setting)
             cardStackView.rewind()
+        }
+
+        val rewind = findViewById<View>(R.id.rewind_button)
+        rewind.setOnClickListener {
+            val setting = SwipeAnimationSetting.Builder()
+                    .setDirection(Direction.Bottom)
+                    .setDuration(Duration.Normal.duration)
+                    .setInterpolator(DecelerateInterpolator())
+                    .build()
+            manager.setSwipeAnimationSetting(setting)
+            cardStackView.swipe()
         }
 
         val like = findViewById<View>(R.id.like_button)
@@ -143,6 +154,7 @@ class MainActivity : AppCompatActivity(), CardStackListener {
         manager.setScaleInterval(0.95f)
         manager.setSwipeThreshold(0.3f)
         manager.setMaxDegree(20.0f)
+        // If you set the direction to vertical, it disables horizontal!
         manager.setDirections(Direction.HORIZONTAL)
         manager.setCanScrollHorizontal(true)
         manager.setCanScrollVertical(true)
